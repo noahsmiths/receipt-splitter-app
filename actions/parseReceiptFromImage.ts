@@ -12,10 +12,10 @@ const Receipt = z.object({
       price: z.number(),
     })),
     subtotal: z.number(),
-    tax: z.number().nullable().optional(),
-    serviceCharge: z.number().nullable().optional(),
-    tip: z.number().nullable().optional(),
-  }).nullable().optional()
+    tax: z.number().nullish(),
+    serviceCharge: z.number().nullish(),
+    tip: z.number().nullish(),
+  }).nullish()
 });
 export type Receipt = z.infer<typeof Receipt>;
 
