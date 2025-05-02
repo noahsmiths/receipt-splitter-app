@@ -5,37 +5,44 @@ import { ChangeEvent, useState } from "react";
 export default function ImageSelectorWithPreview({
   onSubmit
 }: Readonly<{
-  onSubmit(base64Image: string): Promise<string>
+  onSubmit(base64Image: string): Promise<any>
 }>) {
-  const [previewURL, setPreviewURL] = useState<string | null>(null);
+  const [previewURI, setPreviewURI] = useState<string | null>(null);
+  const [buttonsDisabled, setButtonsDisabled] = useState(false);
 
   function updateImagePreview(event: ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
 
     if (file === undefined || !file.type.startsWith("image/")) {
-      setPreviewURL(null);
+      setPreviewURI(null);
       return;
     }
 
     const reader = new FileReader();
     reader.onload = () => {
-      setPreviewURL(reader.result as string);
+      setPreviewURI(reader.result as string);
     }
     reader.readAsDataURL(file);
+  }
+
+  async function handleSubmit() {
+    setButtonsDisabled(true);
+    await onSubmit(previewURI!);
+    setButtonsDisabled(false);
   }
 
   return (
     <div className="flex flex-col justify-center items-center h-full gap-2">
       {
         // eslint-disable-next-line @next/next/no-img-element
-        previewURL && <img src={previewURL} alt="Receipt Preview" className="max-h-[90%]"/>
+        previewURI && <img src={previewURI} alt="Receipt Preview" className="max-h-[90%]"/>
       }
       <div className="flex flex-row w-full justify-center gap-2">
         {
-          previewURL ? (
+          previewURI ? (
             <>
-              <span className="btn btn-success cursor-pointer" onClick={async () => { const res = await onSubmit(previewURL); console.log(res); }}>Looks Good</span>
-              <span className="btn btn-error cursor-pointer" onClick={() => { setPreviewURL(null); }}>Cancel</span>
+              <button className={`btn btn-success cursor-pointer ${buttonsDisabled && "btn-disabled"}`} onClick={handleSubmit}>Looks Good</button>
+              <button className={`btn btn-error cursor-pointer ${buttonsDisabled && "btn-disabled"}`} onClick={() => { setPreviewURI(null); }}>Cancel</button>
             </>
           ) : (
             <label>
