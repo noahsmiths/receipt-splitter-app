@@ -19,11 +19,15 @@ export default function Home() {
     }
   }
 
+  async function handleReceiptData(receipt: NonNullable<Receipt["result"]>) {
+
+  }
+
   return (
-    <div className="flex flex-col justify-center items-center min-h-screen max-h-screen h-screen">
+    <div className="flex flex-col w-full min-h-screen max-h-screen h-screen">
       {
         receiptData?.result ? (
-          <ReceiptDataEditor receipt={receiptData.result} />
+          <ReceiptDataEditor onSubmit={handleReceiptData} receipt={receiptData.result} />
         ) : (
           <ImageSelectorWithPreview onSubmit={handleImage} />
         )

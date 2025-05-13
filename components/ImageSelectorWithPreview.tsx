@@ -41,8 +41,8 @@ export default function ImageSelectorWithPreview({
         {
           previewURI ? (
             <>
-              <button className={`btn btn-success cursor-pointer ${buttonsDisabled && "btn-disabled"}`} onClick={handleSubmit}>Looks Good</button>
-              <button className={`btn btn-error cursor-pointer ${buttonsDisabled && "btn-disabled"}`} onClick={() => { setPreviewURI(null); }}>Cancel</button>
+              <button className="btn btn-success cursor-pointer" disabled={buttonsDisabled} onClick={handleSubmit}>Looks Good</button>
+              <button className="btn btn-error cursor-pointer" disabled={buttonsDisabled} onClick={() => { setPreviewURI(null); }}>Cancel</button>
             </>
           ) : (
             <label>
