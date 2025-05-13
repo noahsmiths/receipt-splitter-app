@@ -11,6 +11,9 @@ export default function ReceiptDataEditor({
   onSubmit(data: NonNullable<Receipt["result"]>): Promise<any>
 }>) {
   const [items, setItems] = useState(receipt.items);
+  const [serviceCharge, setServiceCharge] = useState(receipt.serviceCharge || 0);
+  const [tip, setTip] = useState(receipt.tip || 0);
+  const [tax, setTax] = useState(receipt.tax || 0);
   const [buttonsDisabled, setButtonsDisabled] = useState(false);
 
   async function handleSubmit() {
@@ -18,6 +21,8 @@ export default function ReceiptDataEditor({
     await onSubmit({...receipt, items: items});
     setButtonsDisabled(false);
   }
+
+  const total = (items.reduce((total, { price }) => total + price, 0) + serviceCharge + tip + tax).toFixed(2);
 
   return (
     <div className="flex flex-col h-full">
@@ -89,24 +94,24 @@ export default function ReceiptDataEditor({
           <label>
             <span className="font-bold p-1">Service Charge:</span>
             &nbsp;
-            <input className="input w-16 h-[2.5em] px-1"/>
+            <input className="input w-16 h-[2.5em] px-1" type="number" defaultValue={serviceCharge.toFixed(2)} onChange={(event) => setServiceCharge(+event.target.value || 0)} />
           </label>
           <label>
             <span className="font-bold p=1">Tip:</span>
             &nbsp;
-            <input className="input w-16 h-[2.5em] px-1"/>
+            <input className="input w-16 h-[2.5em] px-1" type="number" defaultValue={tip.toFixed(2)} onChange={(event) => setTip(+event.target.value || 0)} />
           </label>
         </div>
         <div className="flex flex-row w-full justify-around">
           <label>
             <span className="font-bold p-1">Tax:</span>
             &nbsp;
-            <input className="input w-16 h-[2.5em] px-1"/>
+            <input className="input w-16 h-[2.5em] px-1" type="number" defaultValue={tax.toFixed(2)} onChange={(event) => setTax(+event.target.value || 0)} />
           </label>
           <label>
             <span className="font-bold p=1">Total:</span>
             &nbsp;
-            <input className="input w-16 h-[2.5em] px-1" readOnly/>
+            <input className="input w-16 h-[2.5em] px-1" value={total} readOnly/>
           </label>
         </div>
         <button className="btn btn-primary cursor-pointer w-full sm:w-auto" disabled={buttonsDisabled} onClick={handleSubmit}>Done</button>

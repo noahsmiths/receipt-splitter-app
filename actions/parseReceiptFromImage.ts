@@ -21,7 +21,7 @@ export type Receipt = z.infer<typeof Receipt>;
 
 export default async function parseReceiptFromImage(base64Image: string): Promise<Receipt> {
   console.log("Extracting data from image...");
-  // return {"result":{"items":[{"count":2,"name":"A4. FRESH SPRING ROLL","price":6},{"count":2,"name":"A9. THAI BASIL WINGS","price":16},{"count":1,"name":"SWEET/UNST TEA","price":4},{"count":4,"name":"PH3. SPECIAL BEEF PHO","price":60},{"count":1,"name":"FR2. PORK FRIED RICE","price":26},{"count":1,"name":"FR3. SHRIMP FRIED RICE","price":13},{"count":1,"name":"PH8. SHRIMP & PORK NOODLE SOUP sidfhish fiusdfhsuif sidh fiusdfh isdh fiusdh ifhsdif hsidh fuisdfi h","price":14},{"count":2,"name":"A4. FRESH SPRING ROLL","price":6},{"count":2,"name":"A9. THAI BASIL WINGS","price":16},{"count":1,"name":"SWEET/UNST TEA","price":4},{"count":4,"name":"PH3. SPECIAL BEEF PHO","price":60},{"count":1,"name":"FR2. PORK FRIED RICE","price":26},{"count":1,"name":"FR3. SHRIMP FRIED RICE","price":13},{"count":1,"name":"PH8. SHRIMP & PORK NOODLE SOUP sidfhish fiusdfhsuif sidh fiusdfh isdh fiusdh ifhsdif hsidh fuisdfi h","price":14}],"tax":9.38,"serviceCharge":25.02,"tip":null}};
+  return {"result":{"items":[{"count":2,"name":"A4. FRESH SPRING ROLL","price":6},{"count":2,"name":"A9. THAI BASIL WINGS","price":16},{"count":1,"name":"SWEET/UNST TEA","price":4},{"count":4,"name":"PH3. SPECIAL BEEF PHO","price":60},{"count":1,"name":"FR2. PORK FRIED RICE","price":26},{"count":1,"name":"FR3. SHRIMP FRIED RICE","price":13},{"count":1,"name":"PH8. SHRIMP & PORK NOODLE SOUP sidfhish fiusdfhsuif sidh fiusdfh isdh fiusdh ifhsdif hsidh fuisdfi h","price":14}],"tax":9.38,"serviceCharge":25.02,"tip":null}};
 
   const { object } = await generateObject({
     model: openai("gpt-4o"),
